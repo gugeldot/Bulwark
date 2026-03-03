@@ -1,4 +1,9 @@
+<p align="center">
+  <img src="images/bulwark.png" alt="Bulwark" width="480"/>
+</p>
+
 # BadUSB Heuristic Analyser
+
 
 A desktop application that monitors connected USB devices and analyses keystroke dynamics in real time to detect HID injection attacks (BadUSB / Rubber Ducky / O.MG Cable, etc.).
 
