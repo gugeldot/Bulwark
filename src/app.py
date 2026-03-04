@@ -9,7 +9,7 @@ from tkinter import filedialog, messagebox, scrolledtext
 from badusb.alert_manager import AlertManager
 from badusb.blocker import KeyboardFuzzer
 from badusb.config import ALERT_COOLDOWN, OS_TYPE
-from badusb.settings import FUZZER_DURATION, FUZZER_INTERVAL, CONSECUTIVE_FAST_THRESHOLD, MAX_HUMAN_KPS, LOW_JITTER_THRESHOLD, TRUSTED_TEST_DURATION, OBS_MAX_LOG
+from badusb.settings import FUZZER_DURATION, FUZZER_INTERVAL, CONSECUTIVE_FAST_THRESHOLD, MAX_HUMAN_KPS, LOW_JITTER_THRESHOLD, TRUSTED_TEST_DURATION, OBS_MAX_LOG, WINDOW_WIDTH_RATIO, WINDOW_HEIGHT_RATIO
 from badusb.keyboard_monitor import KeyboardMonitor
 from badusb.report import generate_report
 from badusb.trust_manager import TrustManager
@@ -63,7 +63,13 @@ class BadUSBDetectorGUI:
     def __init__(self, root: tk.Tk) -> None:
         self.root = root
         self.root.title(f"BadUSB Heuristic Analysis ({OS_TYPE}) — UAH")
-        self.root.geometry("950x1100")
+        _sw = self.root.winfo_screenwidth()
+        _sh = self.root.winfo_screenheight()
+        _w  = int(_sw * WINDOW_WIDTH_RATIO)
+        _h  = int(_sh * WINDOW_HEIGHT_RATIO)
+        _x  = (_sw - _w) // 2
+        _y  = (_sh - _h) // 2
+        self.root.geometry(f"{_w}x{_h}+{_x}+{_y}")
         self.root.configure(bg="#2c3e50")
 
         # App icon — resolved relative to this file so it works from any cwd

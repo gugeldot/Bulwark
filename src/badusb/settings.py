@@ -75,3 +75,13 @@ FUZZER_BURST_SIZE: int = 10
 
 # Seconds after which fuzzing auto-stops. Set to 0 for unlimited duration.
 FUZZER_DURATION: float = 10
+
+# ════════════════════════════════════════════════════════════════════════════
+# Window size (relative to screen dimensions)
+# ════════════════════════════════════════════════════════════════════════════
+
+# Fraction of the screen width the main window should occupy (0.0–1.0).
+WINDOW_WIDTH_RATIO: float = 0.40
+
+# Fraction of the screen height the main window should occupy (0.0–1.0).
+WINDOW_HEIGHT_RATIO: float = 0.75
