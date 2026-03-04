@@ -4,6 +4,7 @@
 
 # BadUSB Heuristic Analyser
 
+### _Heuristic USB HID injection detector using IKI dynamics (CPS + jitter fingerprinting) with active fuzzing countermeasure._
 
 A desktop application that monitors connected USB devices and analyses keystroke dynamics in real time to detect HID injection attacks (BadUSB / Rubber Ducky / O.MG Cable, etc.).
 
@@ -23,26 +24,6 @@ Built with Python + Tkinter. No external cloud services. Runs entirely on-device
 
 ---
 
-## Platform Compatibility
-
-| Feature | Linux | Windows |
-|---|:---:|:---:|
-| USB device listing | ✅ Full (pyudev) | ⚠️ Basic (winreg keys) |
-| Active keyboard identification | ✅ (pyudev input subsystem) | ❌ Returns "Unknown device" |
-| Keystroke dynamics (pynput) | ✅ X11 / Wayland* | ✅ |
-| ACTIVE BLOCK fuzzer (pynput) | ✅ | ✅ |
-| GUI (tkinter) | ✅ | ✅ |
-| Save dialog / Desktop path | ✅ | ✅ |
-
-> **\* Wayland note:** `pynput` global keyboard listener requires `python3-xlib` on X11.
-> On Wayland it may not capture keystrokes from other applications without additional permissions.
-
-> **Windows note:** USB label resolution uses the registry (device IDs, no friendly names).
-> Active keyboard identification is not implemented — all keystroke events are attributed to "Unknown device".
-
-
----
-
 ## Requirements
 
 - Python 3.10+
@@ -51,14 +32,16 @@ Built with Python + Tkinter. No external cloud services. Runs entirely on-device
 ### Linux additional dependencies
 
 ```bash
-# pynput on X11
+# pynput global listener requires python3-xlib on X11
 sudo apt install python3-xlib   # Debian/Ubuntu
 sudo pacman -S python-xlib      # Arch
 
 # pyudev for USB detection
 sudo apt install python3-pyudev # Debian/Ubuntu (or via pip)
-
 ```
+
+> **Wayland note:** `pynput` global keyboard listener requires `python3-xlib` on X11.
+> On Wayland it may not capture keystrokes from other applications without additional permissions.
 
 ### Windows
 
@@ -119,7 +102,6 @@ Both tiers are **per-device** — your own keyboard's samples never contaminate 
 
 ## Known limitations
 
-- Active keyboard identification only works on Linux (pyudev input subsystem).
 - The ACTIVE BLOCK fuzzer injects characters into whichever window has focus — avoid running with sensitive documents open.
 - KVM switches and USB hubs can introduce variable latency, potentially raising jitter and suppressing Tier 2 alerts for a real BadUSB.
 - `pynput` on Wayland may require additional configuration to capture global events.
